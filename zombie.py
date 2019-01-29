@@ -5,6 +5,10 @@ class Zombie(GameObject):
     startX = 0
     startY = 0
 
+    # zombie stats
+    health = 10
+    speed = 0.5
+
     radius = 10
     colour = "#2f9909"
     char = 'z'
@@ -54,8 +58,36 @@ class Zombie(GameObject):
         tkCanvas.coords(self.m_textId,self.x,self.y)
 
     def update(self, gameGlobals):
-        self.x = self.startX + math.cos(gameGlobals.realTime)*self.radius
-        self.y = self.startY + math.sin(gameGlobals.realTime)*self.radius
+
+        # move towards the player
+        (playerX,playerY) = gameGlobals.player.get_position()
+
+        moveX = 0
+        moveY = 0
+        
+        if(playerX < self.x):
+            moveX = -self.speed
+        elif(playerX > self.x):
+            moveX = self.speed
+
+        
+        if(playerY < self.y):
+            moveY = -self.speed
+        elif(playerY > self.y):
+            moveY = self.speed
+        
+        
+        self.x = self.x + moveX
+        self.y = self.y + moveY
+
+        if(self.health <= 0):
+            self.dead(gameGlobals)
+
+    def dead(self,gameGlobals):
+        gameGlobals.engine.remove_game_object(self)
+
+    def take_damage(self,damage):
+        self.health -= damage
 
     def get_collision_radius(self):
         return self.radius

@@ -1,4 +1,5 @@
 from gameobject import *
+import zombie
 
 class Player(GameObject):
 
@@ -61,7 +62,8 @@ class Player(GameObject):
             (endX,endY) = gameGlobals.get_mouse_position()
             # trace the physics line against the zombies
             hit = gameGlobals.gameWorld.traceline(self.x,self.y,endX,endY)
-            print(hit)
+            if(isinstance(hit,zombie.Zombie)):
+                hit.take_damage(10)
             # draw the bullet effects
             gameGlobals.bulletManager.fire_bullet(self.x,self.y,endX,endY)
 

@@ -8,6 +8,7 @@ class ZompyGlobals(GameGlobals):
     zoms = 10
     bulletManager = None
     gameWorld = None
+    player = None
 
 class ZompyEngine(GameEngine):
 
@@ -39,6 +40,7 @@ class ZompyEngine(GameEngine):
         z4 = Zombie(x=200,y=200)
 
         pl = Player(x=300,y=300)
+        gGlobals.player = pl
 
         print(gGlobals.zoms)
         
