@@ -22,6 +22,12 @@ class Zombie(GameObject):
     def on_start(self,gameGlobals):
         self.startX = self.x
         self.startY = self.y
+        # register ourselves with the game world as an obstacle
+        gameGlobals.gameWorld.add_obstacle(self)
+
+    def on_remove(self, gameGlobals):
+        # remove ourselves from the list of obstacles
+        gameGlobals.gameWorld.remove_obstacle(self)
 
     def setup_gfx(self, tkCanvas):
         x0 = self.x - self.radius
@@ -50,3 +56,6 @@ class Zombie(GameObject):
     def update(self, gameGlobals):
         self.x = self.startX + math.cos(gameGlobals.realTime)*self.radius
         self.y = self.startY + math.sin(gameGlobals.realTime)*self.radius
+
+    def get_collision_radius(self):
+        return self.radius

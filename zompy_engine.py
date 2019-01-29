@@ -2,10 +2,12 @@ from engine import *
 from zombie import *
 from player import *
 from bullet_manager import *
+from gameworld import *
 
 class ZompyGlobals(GameGlobals):
     zoms = 10
     bulletManager = None
+    gameWorld = None
 
 class ZompyEngine(GameEngine):
 
@@ -17,10 +19,16 @@ class ZompyEngine(GameEngine):
 
     def setup_game(self,gGlobals):
 
+        # create a gameworld
+        gw = GameWorld()
+        gGlobals.gameWorld = gw
+        
         # create the managers for the game
         bm = BulletManager()
         gGlobals.bulletManager = bm
         super().add_game_object(bm)
+
+        
         
         z1 = Zombie(x=50,y=50,colour="red",char="R")
         

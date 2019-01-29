@@ -64,6 +64,7 @@ class BulletManager(GameObject):
     def fire_bullet(self,start_x,start_y,end_x,end_y,colour="#FFFF00"):
         # find first dead bullet
         for b in self.bullets:
+            # skip all the already alive bullets
             if(b.alive):
                 continue
             # initialise this bullet

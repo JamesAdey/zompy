@@ -26,3 +26,9 @@ class GameObject(object):
 
     def update(self, gameGlobals):
         pass
+
+    def get_position(self):
+        return(self.x,self.y)
+
+    def get_collision_radius(self):
+        return 0

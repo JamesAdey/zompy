@@ -60,7 +60,8 @@ class Player(GameObject):
             # get the mouse position as the end of our bullet
             (endX,endY) = gameGlobals.get_mouse_position()
             # trace the physics line against the zombies
-            
+            hit = gameGlobals.gameWorld.traceline(self.x,self.y,endX,endY)
+            print(hit)
             # draw the bullet effects
             gameGlobals.bulletManager.fire_bullet(self.x,self.y,endX,endY)
 
