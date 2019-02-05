@@ -8,11 +8,13 @@ class Zombie(GameObject):
     # zombie stats
     health = 10
     speed = 0.5
+    
 
     radius = 10
     colour = "#2f9909"
     char = 'z'
 
+    spawner = None
     m_ovalId = None
     m_textId = None
 
@@ -32,6 +34,8 @@ class Zombie(GameObject):
     def on_remove(self, gameGlobals):
         # remove ourselves from the list of obstacles
         gameGlobals.gameWorld.remove_obstacle(self)
+        # notify our spawner that we have died
+        self.spawner.remove_zombie(self)
 
     def setup_gfx(self, tkCanvas):
         x0 = self.x - self.radius
@@ -91,3 +95,6 @@ class Zombie(GameObject):
 
     def get_collision_radius(self):
         return self.radius
+
+    def set_spawner(self,spawner):
+        self.spawner = spawner
