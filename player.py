@@ -88,4 +88,6 @@ class Player(GameObject):
             shoot = True
 
         return (xMove,yMove,shoot)
-        
+
+    def on_collision(self, gameGlobals, other):
+        print("Player collided with "+str(other))
