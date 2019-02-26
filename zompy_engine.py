@@ -6,12 +6,15 @@ from gameworld import *
 from zombie_spawner import *
 from item_manager import *
 from example_item import *
+from navgrid import *
+from zombie_gridwalker import *
 
 class ZompyGlobals(GameGlobals):
     zoms = 10
     bulletManager = None
     itemManager = None
     gameWorld = None
+    navGrid = None
     player = None
 
 class ZompyEngine(GameEngine):
@@ -36,9 +39,19 @@ class ZompyEngine(GameEngine):
         im = ItemManager()
         gGlobals.itemManager = im
         super().add_game_object(im)
-
+    
+        # create a zombie spawner
         zs = ZombieSpawner(x=100,y=100)
         super().add_game_object(zs)
+
+        # create a nav grid
+        ng = NavGrid(resolution=20)
+        super().add_game_object(ng)
+        gGlobals.navGrid = ng
+
+        # create a gridwalker
+        gw = ZombieGridwalker(x=50,y=50)
+        super().add_game_object(gw)
 
         it = ExampleItem(x=200,y=200)
         super().add_game_object(it)
