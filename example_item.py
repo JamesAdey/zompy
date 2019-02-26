@@ -6,6 +6,8 @@ class ExampleItem(GameObject):
     colour = "#FFFF00"
     char = 'i'
 
+    navCost = 5
+
     m_ovalId = None
     m_textId = None
 
@@ -19,10 +21,12 @@ class ExampleItem(GameObject):
     def on_start(self,gameGlobals):
         # register ourselves with the gameWorld as an item
         gameGlobals.itemManager.add_item(self)
+        gameGlobals.navGrid.add_blocker(self)
 
     def on_remove(self, gameGlobals):
         # remove ourselves from the list of items
         gameGlobals.itemManager.remove_item(self)
+        gameGlobals.navGrid.remove_blocker(self)
 
     def setup_gfx(self, tkCanvas):
         x0 = self.x - self.radius
@@ -51,3 +55,6 @@ class ExampleItem(GameObject):
 
     def get_collision_radius(self):
         return self.radius
+
+    def get_nav_cost(self):
+        return self.navCost

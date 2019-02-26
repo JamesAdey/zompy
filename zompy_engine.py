@@ -53,8 +53,11 @@ class ZompyEngine(GameEngine):
         gw = ZombieGridwalker(x=50,y=50)
         super().add_game_object(gw)
 
-        it = ExampleItem(x=200,y=200)
-        super().add_game_object(it)
+        for i in range(10):
+            it = ExampleItem(x=200,y=200+(i*10))
+            super().add_game_object(it)
+
+        
         
         pl = Player(x=300,y=300)
         gGlobals.player = pl
