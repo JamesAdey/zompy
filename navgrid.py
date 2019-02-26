@@ -84,11 +84,6 @@ class NavGrid (GameObject):
         if(blocker in self.blockers):
             self.blockers.remove(blocker)
 
-    def update_blockers(self):
-        for blocker in self.blockers:
-            cell = self.closest_cell_to(blocker)
-            cell.cost += blocker.get_nav_cost()
-
     def update(self, gameGlobals):
         if(self.mode == "done"):
             # clear the open list
@@ -103,7 +98,9 @@ class NavGrid (GameObject):
                     cell.seen = False
                     cell.hasPlayer = False
             # update the blockers
-            self.update_blockers()
+            for blocker in self.blockers:
+                cell = self.closest_cell_to(blocker)
+                cell.cost += blocker.get_nav_cost()
             # add the closest cell to the player to the grid
             closest = self.closest_cell_to(gameGlobals.player)
             closest.hasPlayer = True
@@ -115,7 +112,6 @@ class NavGrid (GameObject):
 
             for i in range(self.resolution):
                 if(self.openList == []):
-                    print("done")
                     self.mode = "done"
                     break
             

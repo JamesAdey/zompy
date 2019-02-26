@@ -53,6 +53,7 @@ class ZompyEngine(GameEngine):
         gw = ZombieGridwalker(x=50,y=50)
         super().add_game_object(gw)
 
+        # create a line of items
         for i in range(10):
             it = ExampleItem(x=200,y=200+(i*10))
             super().add_game_object(it)
