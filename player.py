@@ -91,3 +91,6 @@ class Player(GameObject):
 
     def on_collision(self, gameGlobals, other):
         print("Player collided with "+str(other))
+
+    def get_collision_radius(self):
+        return self.radius
