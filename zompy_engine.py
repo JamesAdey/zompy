@@ -1,17 +1,21 @@
 from engine import *
-from zombie import *
-from player import *
 from bullet_manager import *
 from gameworld import *
-from zombie_spawner import *
 from item_manager import *
-from example_item import *
 from navgrid import *
-from zombie_gridwalker import *
+from game_manager import *
+from gui_text import *
+
+# these are not a class currently
+# but a suite of helper methods
+import level_random
+import level_cross
+import level_test
 
 class ZompyGlobals(GameGlobals):
     zoms = 10
     bulletManager = None
+    gameManager = None
     itemManager = None
     gameWorld = None
     navGrid = None
@@ -39,30 +43,40 @@ class ZompyEngine(GameEngine):
         im = ItemManager()
         gGlobals.itemManager = im
         super().add_game_object(im)
-    
-        # create a zombie spawner
-        zs = ZombieSpawner(x=100,y=100)
-        super().add_game_object(zs)
+
+        gm = GameManager()
+        gGlobals.gameManager = gm
+        super().add_game_object(gm)
 
         # create a nav grid
         ng = NavGrid(resolution=20)
         super().add_game_object(ng)
         gGlobals.navGrid = ng
 
-        # create a gridwalker
-        gw = ZombieGridwalker(x=50,y=50)
-        super().add_game_object(gw)
+        # configure the Graphical User Interface
+        self.setup_ui(gGlobals)
 
-        # create a line of items
-        for i in range(10):
-            it = ExampleItem(x=200,y=200+(i*10))
-            super().add_game_object(it)
+        # Now decide which level to create and start it
+        levelName = "random"
 
-        
-        
-        pl = Player(x=300,y=300)
-        gGlobals.player = pl
-        
-        super().add_game_object(zs)
+        if(levelName == "random"):
+            level_random.create_level(super(),gGlobals)
+        elif(levelName == "cross"):
+            level_random.create_level(super(),gGlobals)
+        elif(levelName == "test"):
+            level_test.create_level(super(),gGlobals)
+        else:
+            print("ERROR Could not create level!")
+            
+    def setup_ui(self,gGlobals):
+        # create a score gui and link it to the game manager
+        scoreText = GUIText(x=10,y=10,baseText="Score: ")
+        gGlobals.gameManager.set_score_gui(scoreText)
+        scoreText.set_text("0")
+        super().add_game_object(scoreText)
 
-        super().add_game_object(pl)
+        # create a health gui and link it to the game manager
+        healthText = GUIText(x=10,y=30,baseText="Health: ")
+        gGlobals.gameManager.set_health_gui(healthText)
+        healthText.set_text("100")
+        super().add_game_object(healthText)

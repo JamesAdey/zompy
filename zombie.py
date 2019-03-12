@@ -1,4 +1,5 @@
 from gameobject import *
+import player
 
 class Zombie(GameObject):
 
@@ -29,10 +30,15 @@ class Zombie(GameObject):
         self.startY = self.y
         # register ourselves with the game world as an obstacle
         gameGlobals.gameWorld.add_obstacle(self)
+        # register ourselves with the gameWorld as an item
+        # this means we can detect collisions
+        gameGlobals.itemManager.add_item(self)
 
     def on_remove(self, gameGlobals):
         # remove ourselves from the list of obstacles
         gameGlobals.gameWorld.remove_obstacle(self)
+        # remove ourselves from the list of items
+        gameGlobals.itemManager.remove_item(self)
 
     def setup_gfx(self, tkCanvas):
         x0 = self.x - self.radius
@@ -85,6 +91,9 @@ class Zombie(GameObject):
             self.dead(gameGlobals)
 
     def dead(self,gameGlobals):
+        # notify the game manager that we've died
+        gameGlobals.gameManager.zombie_killed(self)
+        # remove ourselves from the game
         gameGlobals.engine.remove_game_object(self)
 
     def take_damage(self,damage):
@@ -92,3 +101,7 @@ class Zombie(GameObject):
 
     def get_collision_radius(self):
         return self.radius
+
+    def on_collision(self, gameGlobals, other):
+        if(isinstance(other, player.Player)):
+            other.take_damage(1)

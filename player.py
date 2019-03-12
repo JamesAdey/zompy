@@ -3,8 +3,9 @@ import zombie
 
 class Player(GameObject):
 
-
+    health = 100
     radius = 10
+    hurt = True
     
     colour = "#DDDDFF"
     char = '@'
@@ -67,6 +68,11 @@ class Player(GameObject):
             # draw the bullet effects
             gameGlobals.bulletManager.fire_bullet(self.x,self.y,endX,endY)
 
+        # update our status in the GUI
+        if(self.hurt):
+            gameGlobals.gameManager.update_player_health(self.health)
+            self.hurt = False
+
     def do_inputs(self, gameGlobals):
         xMove = 0
         yMove = 0
@@ -94,3 +100,7 @@ class Player(GameObject):
 
     def get_collision_radius(self):
         return self.radius
+
+    def take_damage(self, damage):
+        self.health -= damage
+        self.hurt = True

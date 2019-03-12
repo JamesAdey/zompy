@@ -5,6 +5,7 @@ class GameManager(GameObject):
     zombiesKilled = 0
 
     scoreGUI = None
+    healthGUI = None
 
     def __init__(self,x=0,y=0):
         super().__init__()
@@ -42,4 +43,10 @@ class GameManager(GameObject):
 
     def set_score_gui(self, newScoreGUI):
         self.scoreGUI = newScoreGUI
+
+    def update_player_health(self,health):
+        self.healthGUI.set_text(str(health))
+
+    def set_health_gui(self,newHealthGUI):
+        self.healthGUI = newHealthGUI
         
