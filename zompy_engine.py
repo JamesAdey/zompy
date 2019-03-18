@@ -1,13 +1,14 @@
 from engine import *
-from zombie import *
-from player import *
 from bullet_manager import *
 from gameworld import *
-from zombie_spawner import *
 from item_manager import *
-from example_item import *
 from navgrid import *
-from zombie_gridwalker import *
+
+# these are not a class currently
+# but a suite of helper methods
+import level_random
+import level_cross
+import level_test
 
 class ZompyGlobals(GameGlobals):
     zoms = 10
@@ -39,30 +40,21 @@ class ZompyEngine(GameEngine):
         im = ItemManager()
         gGlobals.itemManager = im
         super().add_game_object(im)
-    
-        # create a zombie spawner
-        zs = ZombieSpawner(x=100,y=100)
-        super().add_game_object(zs)
 
         # create a nav grid
         ng = NavGrid(resolution=20)
         super().add_game_object(ng)
         gGlobals.navGrid = ng
 
-        # create a gridwalker
-        gw = ZombieGridwalker(x=50,y=50)
-        super().add_game_object(gw)
+        levelName = "random"
 
-        # create a line of items
-        for i in range(10):
-            it = ExampleItem(x=200,y=200+(i*10))
-            super().add_game_object(it)
+        if(levelName == "random"):
+            level_random.create_level(super(),gGlobals)
+        elif(levelName == "cross"):
+            level_cross.create_level(super(),gGlobals)
+        elif(levelName ==  "test"):
+            level_test.create_level(super(),gGlobals)
+        else:
+            print("ERROR Could not create level!")
+      
 
-        
-        
-        pl = Player(x=300,y=300)
-        gGlobals.player = pl
-        
-        super().add_game_object(zs)
-
-        super().add_game_object(pl)
