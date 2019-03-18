@@ -62,8 +62,8 @@ class ZompyEngine(GameEngine):
         if(levelName == "random"):
             level_random.create_level(super(),gGlobals)
         elif(levelName == "cross"):
-            level_random.create_level(super(),gGlobals)
-        elif(levelName == "test"):
+            level_cross.create_level(super(),gGlobals)
+        elif(levelName ==  "test"):
             level_test.create_level(super(),gGlobals)
         else:
             print("ERROR Could not create level!")
