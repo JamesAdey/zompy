@@ -94,7 +94,13 @@ class GameEngine(object):
         # setup the game
         self.setup_game(self.gGlobals)
         # RUN!!!!
-        self.rootTk.after(self.deltaTime,self.run_game)
+        '''
+        tkinter runs on a separate thread. it's
+        possible that the canvas hasn't been initialised
+        by the time we run the game
+        therefore. artificially delay 200ms to avoid this.
+        '''
+        self.rootTk.after(200+self.deltaTime,self.run_game)
         self.rootTk.mainloop()
 
     def run_game(self):
