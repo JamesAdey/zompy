@@ -1,5 +1,6 @@
 from gameobject import *
 from zombie import *
+from zombie_ranged import *
 
 class ZombieSpawner(GameObject):
 
@@ -22,9 +23,20 @@ class ZombieSpawner(GameObject):
             # delay the next spawn by the given delay
             self.nextSpawnTime = gGlobals.realTime + self.spawnDelay
             # spawn a new zombie
-            self.spawn_zombie(gGlobals)
-
+            self.spawn_ranged_zombie(gGlobals)
 
     def spawn_zombie(self,gGlobals):
         zo = Zombie(self.x,self.y)
         gGlobals.engine.add_game_object(zo)
+
+    def spawn_big_zombie(self,gGlobals):
+        zo = Zombie(x=self.x, y=self.y, colour="#9fff99", char='Z')
+        zo.set_stats(speed=0.35,radius=15,health=30,damage=2)
+        gGlobals.engine.add_game_object(zo)
+
+    def spawn_ranged_zombie(self,gGlobals):
+        zo = RangedZombie(x=self.x, y=self.y, colour="#DD9900", char='&')
+        zo.set_stats(speed=0.6,radius=10,health=20,damage=1)
+        gGlobals.engine.add_game_object(zo)
+
+

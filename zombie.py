@@ -9,7 +9,7 @@ class Zombie(GameObject):
     # zombie stats
     health = 10
     speed = 0.5
-    
+    damage = 1
 
     radius = 10
     colour = "#2f9909"
@@ -104,4 +104,10 @@ class Zombie(GameObject):
 
     def on_collision(self, gameGlobals, other):
         if(isinstance(other, player.Player)):
-            other.take_damage(1)
+            other.take_damage(self.damage)
+
+    def set_stats(self,speed=0.5,radius=10,health=10,damage=1):
+        self.speed = speed
+        self.radius = radius
+        self.health = health
+        self.damage = damage

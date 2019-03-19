@@ -57,7 +57,7 @@ class ZompyEngine(GameEngine):
         self.setup_ui(gGlobals)
 
         # Now decide which level to create and start it
-        levelName = "random"
+        levelName = "test"
 
         if(levelName == "random"):
             level_random.create_level(super(),gGlobals)
