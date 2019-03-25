@@ -102,10 +102,11 @@ class NavGrid (GameObject):
                 cell = self.closest_cell_to(blocker)
                 cell.cost += blocker.get_nav_cost()
             # add the closest cell to the player to the grid
-            closest = self.closest_cell_to(gameGlobals.player)
-            closest.hasPlayer = True
-            closest.fScore = 0
-            self.openList.append(closest)
+            for player in gameGlobals.players:
+                closest = self.closest_cell_to(player)
+                closest.hasPlayer = True
+                closest.fScore = 0
+                self.openList.append(closest)
             self.mode = "step"
         
         elif(self.mode == "step"):

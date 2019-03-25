@@ -19,7 +19,8 @@ class ZompyGlobals(GameGlobals):
     itemManager = None
     gameWorld = None
     navGrid = None
-    player = None
+    # list of players
+    players = []
 
 class ZompyEngine(GameEngine):
 
@@ -76,7 +77,12 @@ class ZompyEngine(GameEngine):
         super().add_game_object(scoreText)
 
         # create a health gui and link it to the game manager
-        healthText = GUIText(x=10,y=30,baseText="Health: ")
-        gGlobals.gameManager.set_health_gui(healthText)
+        healthText = GUIText(x=10,y=30,baseText="P1 HP: ")
+        gGlobals.gameManager.set_health_gui(1, healthText)
+        healthText.set_text("100")
+        super().add_game_object(healthText)
+
+        healthText = GUIText(x=10,y=50,baseText="P2 HP: ")
+        gGlobals.gameManager.set_health_gui(2, healthText)
         healthText.set_text("100")
         super().add_game_object(healthText)

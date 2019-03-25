@@ -153,12 +153,10 @@ class GameEngine(object):
         return GameGlobals(self)
 
     def key_press_callback(self,event):
-        if(event.char != ""):
-            self.gGlobals.pressedKeys[event.char] = True
+        self.gGlobals.pressedKeys[str(event.keysym)] = True
 
     def key_release_callback(self,event):
-        if(event.char != ""):
-            self.gGlobals.pressedKeys[event.char] = False
+        self.gGlobals.pressedKeys[str(event.keysym)] = False
 
     def mouse_left_release_callback(self,event):
         self.gGlobals.mouseInputs["left"] = True

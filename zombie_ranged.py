@@ -22,7 +22,8 @@ class RangedZombie(Zombie):
         # move towards the player
         self.move(targetX,targetY)
 
-        self.attack(gameGlobals,gameGlobals.player)
+        for player in gameGlobals.players:
+            self.attack(gameGlobals,player)
 
         if(self.health <= 0):
             self.dead(gameGlobals)

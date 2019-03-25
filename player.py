@@ -3,6 +3,12 @@ import zombie
 
 class Player(GameObject):
 
+    playerNum = None
+    upKey = "w"
+    downKey = "s"
+    leftKey = "a"
+    rightKey = "d"
+
     health = 100
     radius = 10
     hurt = True
@@ -70,7 +76,7 @@ class Player(GameObject):
 
         # update our status in the GUI
         if(self.hurt):
-            gameGlobals.gameManager.update_player_health(self.health)
+            gameGlobals.gameManager.update_player_health(self.playerNum, self.health)
             self.hurt = False
 
     def do_inputs(self, gameGlobals):
@@ -78,16 +84,16 @@ class Player(GameObject):
         yMove = 0
         shoot = False
         
-        if(gameGlobals.is_key_pressed("a")):
+        if(gameGlobals.is_key_pressed(self.leftKey)):
             xMove -=1
         
-        if(gameGlobals.is_key_pressed("d")):
+        if(gameGlobals.is_key_pressed(self.rightKey)):
             xMove +=1
             
-        if(gameGlobals.is_key_pressed("w")):
+        if(gameGlobals.is_key_pressed(self.upKey)):
             yMove -=1
         
-        if(gameGlobals.is_key_pressed("s")):
+        if(gameGlobals.is_key_pressed(self.downKey)):
             yMove +=1
 
         if(gameGlobals.is_mouse_pressed("left")):
@@ -104,3 +110,11 @@ class Player(GameObject):
     def take_damage(self, damage):
         self.health -= damage
         self.hurt = True
+
+    def set_player_info(self,num,upKey,downKey,leftKey,rightKey):
+        self.playerNum = num
+        self.upKey = upKey
+        self.downKey = downKey
+        self.leftKey = leftKey
+        self.rightKey = rightKey
+                    
