@@ -11,6 +11,28 @@ class GameWorld(object):
     def remove_obstacle(self,obs):
         if(obs in self.obstacles):
             self.obstacles.remove(obs)
+
+    def overlap_circle(self,centerX,centerY,radius):
+
+        closest = None
+        sqrRadius = radius*radius
+        closestDist = sqrRadius+1
+        
+        for obs in self.obstacles:
+
+            (x,y) = obs.get_position()
+            dx = centerX - x
+            dy = centerY - y
+            
+            sqrDist = (dx*dx)+(dy*dy)
+            # check if the circle intersects the line
+            if(sqrDist < sqrRadius):
+                # is this a closer hit than before?
+                if(sqrDist < closestDist):
+                    closestDist = sqrDist
+                    closest = obs
+
+        return closest
     
     def traceline(self,startX,startY,endX,endY):
 
